@@ -12,11 +12,13 @@ namespace SeleniumSandbox.Tests.AlertsandModals
         private IWebDriver _driver;
 
         public By SingleModalLaunchButton = By.XPath("//a[contains(text(),'Launch modal')]");
-        public By SingleModal = By.XPath("//div[@id='myModal0']/div/div/div[3]");
-        public By SingleModalClose = By.CssSelector("div.modal-footer > a.btn");
-        public By MultipleModalLaunchButton = By.XPath("(//a[contains(text(),'Launch modal')])[2]");
-        public By MutlipleModal = By.CssSelector("#myModal > div.modal-dialog > div.modal-content > div.modal-body");
-        public By SecondMultiModal = By.XPath("(//a[contains(text(),'Launch modal')])[3]");
+        public By SingleModal = By.XPath("//*[@id='myModal0']/div/div");
+        public By SingleModalClose = By.XPath("//a[contains(text(),'Close')]");
+
+        public By MultiModalLaunchButton = By.XPath("(//a[contains(text(),'Launch modal')])[2]");
+        public By MutliModal = By.XPath("//*[@id='myModal']/div/div");
+        public By MultiModalLaunch = By.XPath("//*[@id='myModal']/div/div/div[3]/a");
+        public By SecondMultiModal = By.XPath("//*[@id='myModal2']/div/div");
         public By SecondMultiModalClose = By.XPath("(//a[contains(text(),'Close')])[3]");
         public By MultiModalSave = By.XPath("(//a[contains(text(),'Save changes')])[2]");
 
@@ -37,18 +39,23 @@ namespace SeleniumSandbox.Tests.AlertsandModals
         public void BootstrapSinglePopupTest()
         {
             _driver.FindElement(SingleModalLaunchButton).Click();
-            _driver.FindElement(SingleModal).Text.Should().Contain("This is the place where the content for the modal dialog displays");
+            System.Threading.Thread.Sleep(2000);
+            //_driver.FindElement(SingleModal);
             _driver.FindElement(SingleModalClose).Click();
         }
 
         [Fact]
         public void BootstrapMultiplePopupTest()
         {
-            _driver.FindElement(MultipleModalLaunchButton).Click();
-            _driver.FindElement(MutlipleModal).Text.Should().Contain(" This is the place where the content for the modal dialog displays. Click launch modal button to launch second modal. Click close link to close the modal. Clicking on Save Changes button will close the modal and refresh the page");
-            _driver.FindElement(MultipleModalLaunchButton).Click();
-            _driver.FindElement(SecondMultiModal).Text.Should().Contain("This is the place where the content for the modal dialog displays.");
+            _driver.FindElement(MultiModalLaunchButton).Click();
+            System.Threading.Thread.Sleep(2000);
+            //_driver.FindElement(MutliModal);
+            _driver.FindElement(MultiModalLaunch).Click();
+            System.Threading.Thread.Sleep(2000);
+            //_driver.FindElement(SecondMultiModal);
             _driver.FindElement(SecondMultiModalClose).Click();
+            System.Threading.Thread.Sleep(2000);
+            _driver.FindElement(MultiModalSave).Click();
         }
     }
 }
