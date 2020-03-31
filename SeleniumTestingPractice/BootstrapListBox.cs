@@ -38,8 +38,28 @@ namespace SeleniumSandbox.Tests.ListBox
         }
 
         [Fact]
-        public void BootstrapListBoxTest()
+        public void BootstrapListBoxSearchTest()
         {
+            /*Inserts texts into left side and right side search boxes. 
+             Checks to make sure the search results from each search box matches the options filtered below
+             each search box*/
+
+            _driver.FindElement(LeftSearchBox).SendKeys("bootstrap");
+            _driver.FindElement(LeftOption1).Text.Should().Contain("bootstrap");
+            _driver.FindElement(LeftSearchBox).Clear();
+            _driver.FindElement(RightSearchBox).SendKeys("Cras");
+            _driver.FindElement(RightOption1).Text.Should().Contain("Cras");
+            _driver.FindElement(RightSearchBox).Clear();
+
+        }
+
+        [Fact]
+        public void BootStrapListBoxSwapTest()
+        { 
+            /* Swaps the left two list boxes to the right and then swaps the right two list boxes
+             to the left. Then, the select all option is selected on the left and all the left 
+             list box options are swapped and then the same behavior is repated on the right side.*/
+
             _driver.FindElement(LeftOption1).Click();
             _driver.FindElement(LeftOption2).Click();
             _driver.FindElement(ArrowRightButton).Click();
