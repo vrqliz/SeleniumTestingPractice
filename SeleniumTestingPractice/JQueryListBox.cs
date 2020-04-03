@@ -56,6 +56,28 @@ namespace SeleniumSandbox.Tests.ListBox
             _driver.FindElement(AddAllButton).Click();
             _driver.FindElement(RightListBox).Text.Should().Contain("Helena");
         }
+
+        [Fact]
+        public void RemoveJQueryListBoxTest()
+        {
+            _driver.FindElement(AddAllButton).Click();
+            _driver.FindElement(OptionOne).Click();
+            IWebElement OptionNumTwo = _driver.FindElement(OptionTwo);
+            IWebElement OptionNumThree = _driver.FindElement(OptionThree);
+            Actions clickaction = new Actions(_driver);
+            clickaction.KeyDown(Keys.Control)
+            .Click(OptionNumTwo)
+            .Click(OptionNumThree)
+            .KeyUp(Keys.Control)
+            .Build()
+            .Perform();
+            _driver.FindElement(RemoveButton).Click();
+            _driver.FindElement(LeftListBox).Text.Should().Contain("Isis");
+            _driver.FindElement(LeftListBox).Text.Should().Contain("Sophia");
+            _driver.FindElement(LeftListBox).Text.Should().Contain("Alice");
+            _driver.FindElement(RemoveAllButton).Click();
+            _driver.FindElement(LeftListBox).Text.Should().Contain("Helena");
+        }
     }
 }
 
