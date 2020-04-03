@@ -12,13 +12,15 @@ namespace SeleniumSandbox.Tests.ListBox
     {
         private IWebDriver _driver;
 
-        public By OptionOne = By.Id("1");
-        public By OptionTwo = By.Id("2");
-        public By OptionThree = By.Id("3");
+        public By OptionOne = By.XPath("//div[@id='pickList']/div/div/select/option");
+        public By OptionTwo = By.XPath("//div[@id='pickList']/div/div/select/option[2]");
+        public By OptionThree = By.XPath("//div[@id='pickList']/div/div/select/option[3]");
         public By AddButton = By.CssSelector("button.pAdd.btn.btn-primary.btn-sm");
-        public By AddAllButton = By.CssSelector("pAddAll.btn.btn-primary btn-sm");
+        public By AddAllButton = By.CssSelector("button.pAddAll.btn.btn-primary.btn-sm");
         public By RemoveButton = By.CssSelector("button.pRemove.btn.btn-primary.btn-sm");
         public By RemoveAllButton = By.CssSelector("button.pRemoveAll.btn.btn-primary.btn-sm");
+        public By RightListBox = By.XPath("//div[@id='pickList']/div/div[3]/select");
+        public By LeftListBox = By.XPath("//div[@id='pickList']/div/div/select");
 
 
         public JQueryListBoxes()
@@ -35,7 +37,7 @@ namespace SeleniumSandbox.Tests.ListBox
         }
 
         [Fact]
-        public void JQueryListBoxTest()
+        public void AddJQueryListBoxTest()
         {
             _driver.FindElement(OptionOne).Click();
             IWebElement OptionNumTwo = _driver.FindElement(OptionTwo);
@@ -47,6 +49,12 @@ namespace SeleniumSandbox.Tests.ListBox
             .KeyUp(Keys.Control)
             .Build()
             .Perform();
+            _driver.FindElement(AddButton).Click();
+            _driver.FindElement(RightListBox).Text.Should().Contain("Isis");
+            _driver.FindElement(RightListBox).Text.Should().Contain("Sophia");
+            _driver.FindElement(RightListBox).Text.Should().Contain("Alice");
+            _driver.FindElement(AddAllButton).Click();
+            _driver.FindElement(RightListBox).Text.Should().Contain("Helena");
         }
     }
 }
