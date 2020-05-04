@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using System;
 using Xunit;
@@ -12,7 +13,7 @@ namespace SeleniumSandbox.Tests.Others
         private IWebDriver _driver;
 
         //public By DraggableItems = By.XPath("//div[@id='todrag']/span");
-        public By DropBox = By.Id("mydropzone");
+        //public By DropBox = By.Id("mydropzone");
         public By DroppedItemList = By.Id("droppedlist");
 
         public DragandDropTests()
@@ -31,8 +32,18 @@ namespace SeleniumSandbox.Tests.Others
         [Fact]
         public void DraggableItemsTest()
         {
-            IWebElement Drag = _driver.FindElement(By.CssSelector("#todrag span"));
+            IWebElement DraggableItem = _driver.FindElement(By.XPath("//div[@id='todrag']/span"));
 
+            IWebElement DropBox = _driver.FindElement(By.Id("mydropzone"));
+
+            Actions move = new Actions(_driver);
+
+            IAction DragandDrop = move.ClickAndHold(DraggableItem)
+                .MoveToElement(DropBox)
+                .Release()
+                .Build();
+                DragandDrop.Perform();
+            System.Threading.Thread.Sleep(2000);
         }
     }
 }
