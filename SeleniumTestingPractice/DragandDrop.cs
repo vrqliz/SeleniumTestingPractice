@@ -32,18 +32,17 @@ namespace SeleniumSandbox.Tests.Others
         [Fact]
         public void DraggableItemsTest()
         {
+
             IWebElement DraggableItem = _driver.FindElement(By.XPath("//div[@id='todrag']/span"));
 
             IWebElement DropBox = _driver.FindElement(By.Id("mydropzone"));
 
             Actions move = new Actions(_driver);
+            move.DragAndDropToOffset(DraggableItem, 264, 64).Build().Perform();
 
-            IAction DragandDrop = move.ClickAndHold(DraggableItem)
-                .MoveToElement(DropBox)
-                .Release()
-                .Build();
-                DragandDrop.Perform();
-            System.Threading.Thread.Sleep(2000);
+            System.Threading.Thread.Sleep(15000);
+
+            _driver.FindElement(DroppedItemList).Text.Should().Contain("Draggable 1");
         }
     }
 }
