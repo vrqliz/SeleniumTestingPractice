@@ -37,8 +37,11 @@ namespace SeleniumSandbox.Tests.Others
 
             IWebElement DropBox = _driver.FindElement(By.Id("mydropzone"));
 
-            Actions move = new Actions(_driver);
-            move.DragAndDropToOffset(DraggableItem, 264, 64).Build().Perform();
+            TouchActions drag = new TouchActions(_driver);
+            drag.LongPress(DraggableItem)
+                .MoveToElement(DropBox)
+                .Release(DropBox)
+                .Perform();
 
             System.Threading.Thread.Sleep(15000);
 
