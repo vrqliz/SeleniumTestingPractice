@@ -13,6 +13,7 @@ namespace SeleniumSandbox.Tests.Others
         private IWebDriver _driver;
 
         public By GetNewUser = By.Id("save");
+        public By UserProfile = By.Id("loading");
 
         public DynamicData()
         {
@@ -32,7 +33,19 @@ namespace SeleniumSandbox.Tests.Others
         {
 
             _driver.FindElement(GetNewUser).Click();
+            System.Threading.Thread.Sleep(4000);
+            IWebElement e1 = _driver.FindElement(UserProfile);
+            if (e1.Enabled)
+            {
+                Console.WriteLine("UserProfile is Enabled");
+            }
+            else
+            {
+                Console.WriteLine("Failed Test");
+            }
 
+            //WebDriverWait waitForElement = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+            //waitForElement.Until.(By.Id("yourIDHere"));
 
         }
     }
